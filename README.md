@@ -342,3 +342,142 @@ In order to find a conflict with 256 bits, we would need to extrapolate the data
 255 = 20316964802070038818612386857089328421472109673908104311674423220135116360097771834278916755485109577226934816639921735486539637902905862909114344042237985514015686656 increments
 256 = 91445578427890558604239702082126946145859049918735210630611565478871813184142091862680814905039629750511376027640335411647289372257413129311431994239590533058724364288 increments
 ```
+
+# Match Finder Results
+```
+Extrapolated Bit = 256
+Start Value = 0
+Increment Value = 91445578427890558604239702082126946145859049918735210630611565478871813184142091862680814905039629750511376027640335411647289372257413129311431994239590533058724364288 * 1
+Max Iterations = 10000 or
+Max Bits = 16
+```
+
+| Matched Bits | Index | Hash | Bits | Formula |
+|--------------|-------|------|------|---------|
+| 3 | 1 | 74542c37b827b6b14010ba9db50dad47ad08d79b4a6b0c163663aaff81333ed8 | 011 | x * 1 * 1 |
+| 3 | 0 | 5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9 | 011 | x * 1 * 0 |
+| | | | | |
+| 10 | 4 | 74045f8010a75e68085fd3d0fc21eca5b44252c2a29de24517d6e2a2fb7773e5 | 0111010000 | x * 1 * 4 |
+| 10 | 1 | 74542c37b827b6b14010ba9db50dad47ad08d79b4a6b0c163663aaff81333ed8 | 0111010000 | x * 1 * 1 |
+| | | | | |
+| 14 | 38 | dc586b3b88cc444a559ed6d45680596da472a1af9fc59ef9554ef263571cbf22 | 11011100010110 | x * 1 * 38 |
+| 14 | 32 | dc5c9b97814ee7110fb0c888a92dde9cb19b5f56be3d8c4bfac07d65d49f8589 | 11011100010110 | x * 1 * 32 |
+| | | | | |
+| 15 | 145 | ea24e45547037541ae1edab39dff8a755a3a7ee7356bc116b63e696773ea62c0 | 111010100010010 | x * 1 * 145 |
+| 15 | 144 | ea2688c7803ca640c764d7412f5d00f7d194754c8eec5227834c685f5b48bae7 | 111010100010010 | x * 1 * 144 |
+| | | | | |
+| 16 | 397 | 24de82f0853f594b61e0f536f0c7a014dc2548c87d604ac5555eb1522071ef7d | 0010010011011110 | x * 1 * 397 |
+| 16 | 175 | 24df3e41df6fc724976f53dc36d0da97aa73a711125bbaa83985af46dc6313fb | 0010010011011110 | x * 1 * 175 |
+| | | | | |
+| 17 | 412 | b47eb8a5efffc668dd67a9b33697bb8ef1fb6ecef22fbe237ce11926de3fc075 | 10110100011111101 | x * 1 * 412 |
+| 17 | 18 | b47e0aeeeb97a52e205b155dc2b489688e22d9ccc118483faacdcbc9409b0581 | 10110100011111101 | x * 1 * 18 |
+| | | | | |
+| 25 | 744 | 36236e384e6042865ceaff56ecb577b2f806e9a7ab6f1bdbae50abac0d906c2c | 0011011000100011011011100 | x * 1 * 744 |
+| 25 | 554 | 36236e9a6a5b5d1ab0673741ec557e4104ae21d135a36be1663686cf8418277d | 0011011000100011011011100 | x * 1 * 554 |
+
+
+---
+
+## Guide Facilitated by 4o
+
+### Comprehensive Guide on Using the Collision Functions
+
+This guide outlines how to effectively use the provided functions for collision detection, analysis, and reporting.
+
+---
+
+### Core Functions Overview
+
+#### 1. **findCollision(x)**
+   - **Purpose**: Finds the first repeated hash value for the first `x` bits of a SHA-256 hash.
+   - **Usage**: Call `findCollision(x)` where `x` is the number of bits to check for a collision.
+
+#### 2. **findCollisions(s, i, y, t)**
+   - **Purpose**: Finds the number of iterations needed to generate `t` collisions for the first `y` bits, starting from `s` with increments of `i`.
+   - **Usage**: Call `findCollisions(s, i, y, t)` with:
+     - `s`: Start value
+     - `i`: Increment value
+     - `y`: Bits to analyze
+     - `t`: Target number of collisions
+
+#### 3. **calcTries(d, t, a)**
+   - **Purpose**: Calculates the number of iterations required to achieve a target number of collisions (`t`) for each value in the dataset `d`, adjusted by `a`.
+   - **Usage**: Call `calcTries(d, t, a)` with:
+     - `d`: Dataset of initial collision values
+     - `t`: Target collisions
+     - `a`: Adjustment value
+
+#### 4. **extendExp(a, n)**
+   - **Purpose**: Extends the dataset exponentially by predicting future values based on the average growth rate of the dataset.
+   - **Usage**: Call `extendExp(a, n)` where:
+     - `a`: Existing dataset
+     - `n`: Number of additional values to generate
+
+#### 5. **getValue(a, n)**
+   - **Purpose**: Predicts the `n`th value of an exponentially growing dataset.
+   - **Usage**: Call `getValue(a, n)` with:
+     - `a`: Existing dataset
+     - `n`: Index of the value to predict
+
+#### 6. **findMatch(t, x, r, iterations, stopLimit, exTo)**
+   - **Purpose**: Searches for matching bits among hash values while iterating with controlled increments.
+   - **Usage**: Call `findMatch(t, x, r, iterations, stopLimit, exTo)` with:
+     - `t`: Starting value
+     - `x`: Increment
+     - `r`: Multiplier for increment
+     - `iterations`: Max iterations
+     - `stopLimit`: Maximum number of bits for matches
+     - `exTo`: Target extrapolated bits
+
+---
+
+### Workflow Example
+
+1. **Initialize Dataset**
+   - Set `bits` for the range of bit lengths to analyze.
+   - Use `findCollision(x)` to generate raw collision data for each bit length.
+     ```python
+     bits = 10
+     data = [findCollision(x) for x in range(1, bits)]
+     ```
+
+2. **Calculate Tries**
+   - Use `calcTries(data, t, a)` to calculate attempts needed to reach `t` collisions.
+     ```python
+     t = 3  # Target collisions
+     a = 0  # Adjustment value
+     res = calcTries(data, t, a)
+     ```
+
+3. **Extend Dataset**
+   - Extend data exponentially for deeper analysis using `extendExp`.
+     ```python
+     e = 24  # Number of additional values
+     extData = extendExp(data, e)
+     extRes = calcTries(extData, t, a)
+     ```
+
+4. **Analyze Results**
+   - Review results of collision attempts with raw and extended datasets using functions like `generateCollisionReport`.
+
+5. **Predict Future Values**
+   - Predict values beyond the dataset using `getValue`.
+     ```python
+     exTo = 256  # Extrapolated value
+     exValue = getValue(data, exTo)
+     ```
+
+6. **Match Search**
+   - Perform a detailed search for matching hash values with `findMatch`.
+     ```python
+     maxBits = 16
+     maxIterations = 10000
+     findMatch(0, exValue, 1, maxIterations, maxBits, exTo)
+     ```
+
+---
+
+### Practical Notes
+- Use smaller values for `bits`, `iterations`, and `stopLimit` during testing to avoid excessive computation.
+- Exponential extension and extrapolation provide insights into long-term trends but should be validated against known data.
+- Tweak `s`, `i`, and `t` in `findCollisions` to explore different collision scenarios.
